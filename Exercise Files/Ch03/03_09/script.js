@@ -36,7 +36,35 @@ function estimateTotal(event) {
 		shippingState = state.value,
 		shippingMethod = document.querySelector('[name=r_method]:checked').value;
 		
-	console.log(itemBball, itemJersey, itemPower, shippingState, shippingMethod);
+	var totalQty = itemBball + itemJersey + itemPower,
+	shippingCostPer,
+	shippingCost,
+	taxFactor = 1,
+	estimate,
+	totalItemPrice = estimate = (90 * itemBball) + (25 * itemJersey) + (30 * itemPower);
+
+	if (shippingState === 'CA') {
+		taxFactor = 1.075;
+	}
+
+	switch (shippingMethod) {
+		case 'usps' :
+			shippingCostPer = 2;
+			break;
+			case 'ups' :
+			shippingCostPer = 3;
+			break;
+			default :
+			shippingCostPer = 0;
+			break;
+	}
+
+	shippingCost = shippingCostPer * totalQty;
+
+	estimate = (totalItemPrice * taxFactor) + shippingCost;
+
+	document.getElementById('txt-estimate').value = estimate;
+
 }
 
 })();
